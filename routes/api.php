@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostMenController;
 // use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -16,15 +17,18 @@ use Illuminate\Support\Facades\Route;
 */
 //Route::prefix('api')->group(function (){});
 
+// Anonymous and register user can access these routes
+Route::post('/register', [AuthController::class, 'register']);
 
+// Only registered user can access these routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
+
     $postMen = '/postmen';
     Route::get( $postMen, [PostMenController::class, 'index']);
     Route::get($postMen.'/{id}', [PostMenController::class, 'show']);
     Route::post($postMen, [PostMenController::class, 'store']);
     Route::put($postMen, [PostMenController::class, 'update']);
     Route::delete($postMen.'/{id}', [PostMenController::class, 'destroy']);
-
 });
 
 /*Route::middleware('auth:api')->get('/user', function (Request $request) {
