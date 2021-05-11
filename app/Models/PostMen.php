@@ -14,4 +14,5 @@ class PostMen extends Model
         'email',
         'category',
     ];
+
 }
